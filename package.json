@@ -1,6 +1,6 @@
 {
   "name": "@brightdata/n8n-nodes-brightdata",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bright Data service for scraping purposes in n8n",
   "keywords": [
     "n8n",
@@ -10,9 +10,11 @@
     "proxy",
     "fingerprinting"
   ],
-  "author": {"name": "Bright Data"},
+  "author": {
+    "name": "Bright Data"
+  },
   "publishConfig": {
-      "access": "public"
+    "access": "public"
   },
   "license": "MIT",
   "repository": {
