@@ -1,25 +1,23 @@
 {
-  "name": "n8n-nodes-brightdata",
-  "version": "0.1.34",
-  "description": "Community node to work with BrightData service for scraping purposes",
+  "name": "@brightdata/n8n-nodes-brightdata",
+  "version": "1.0.0",
+  "description": "Bright Data service for scraping purposes in n8n",
   "keywords": [
     "n8n",
     "n8n-community-node-package",
-    "n8nhackers",
     "bright data",
     "scraping",
     "proxy",
     "fingerprinting"
   ],
-  "license": "MIT",
-  "homepage": "https://n8nhackers.com/",
-  "author": {
-    "name": "Miquel Colomer",
-    "email": "miquel@n8nhackers.com"
+  "author": {"name": "Bright Data"},
+  "publishConfig": {
+      "access": "public"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/n8nhackers/n8n-nodes-brightdata.git"
+    "url": "https://github.com/luminati-io/n8n-nodes-brightdata.git"
   },
   "main": "index.js",
   "scripts": {
