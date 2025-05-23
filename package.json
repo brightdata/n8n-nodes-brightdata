@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/luminati-io/n8n-nodes-brightdata.git"
+    "url": "https://github.com/brightdata-com/n8n-nodes-brightdata.git"
   },
   "main": "index.js",
   "scripts": {
