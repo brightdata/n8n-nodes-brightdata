@@ -4,8 +4,6 @@ import type {
 	INodeListSearchResult,
 } from 'n8n-workflow';
 
-import { brightdataApiRequest } from './GenericFunctions';
-
 type ZoneSearchItem = {
 	name: string;
 	type: string;
@@ -21,12 +19,14 @@ type DataSetItem = {
 type DataSetResponse = DataSetItem[];
 
 export async function getActiveZones(this: ILoadOptionsFunctions): Promise<INodeListSearchResult> {
-	const responseData: ZoneSearchResponse = await brightdataApiRequest.call(
+	const responseData: ZoneSearchResponse = await this.helpers.requestWithAuthentication.call(
 		this,
-		'GET',
-		'/zone/get_active_zones',
-		{},
-		{},
+		'brightdataApi',
+		{
+			method: 'GET',
+			url: 'https://api.brightdata.com/zone/get_active_zones',
+			json: true,
+		},
 	);
 
 	const results: INodeListSearchItems[] = responseData.map((item: ZoneSearchItem) => ({
@@ -62,12 +62,14 @@ type CountrySearchResponse = {
 };
 
 export async function getCountries(this: ILoadOptionsFunctions): Promise<INodeListSearchResult> {
-	const responseData: CountrySearchResponse = await brightdataApiRequest.call(
+	const responseData: CountrySearchResponse = await this.helpers.requestWithAuthentication.call(
 		this,
-		'GET',
-		'/countrieslist',
-		{},
-		{},
+		'brightdataApi',
+		{
+			method: 'GET',
+			url: 'https://api.brightdata.com/countrieslist',
+			json: true,
+		},
 	);
 
 	const results: INodeListSearchItems[] = responseData.zone_type.DC_shared.country_codes.map(
@@ -85,12 +87,14 @@ export async function getCountries(this: ILoadOptionsFunctions): Promise<INodeLi
 }
 
 export async function getDataSets(this: ILoadOptionsFunctions): Promise<INodeListSearchResult> {
-	const responseData: DataSetResponse = await brightdataApiRequest.call(
+	const responseData: DataSetResponse = await this.helpers.requestWithAuthentication.call(
 		this,
-		'GET',
-		'/datasets/list',
-		{},
-		{},
+		'brightdataApi',
+		{
+			method: 'GET',
+			url: 'https://api.brightdata.com/datasets/list',
+			json: true,
+		},
 	);
 
 	const results: INodeListSearchItems[] = responseData.map((item: DataSetItem) => ({

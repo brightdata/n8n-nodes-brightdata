@@ -30,7 +30,7 @@ export const webScrapperOperations: INodeProperties[] = [
 				action: 'Download the snapshot content',
 				routing: {
 					request: {
-						method: 'POST',
+						method: 'GET',
 						url: '/datasets/v3/snapshot/{{$parameter["snapshot_id"]}}',
 					},
 				},
@@ -44,7 +44,12 @@ export const webScrapperOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '/datasets/v3/snapshots',
 						qs: {
-							dataset_id: '={{$parameter["dataset_id"]}}'
+							dataset_id: '={{$parameter["dataset_id"]}}',
+							status: '={{$parameter["status"]}}',
+							skip: '={{$parameter["skip"]}}',
+							limit: '={{$parameter["limit"]}}',
+							from_date: '={{$parameter["from_date"]}}',
+							to_date: '={{$parameter["to_date"]}}',
 						},
 					},
 				},
@@ -70,9 +75,12 @@ export const webScrapperOperations: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/datasets/v3/scrape',
-						qs: {
-							dataset_id: '={{$parameter["dataset_id"]}}'
+						qs: {  
+							dataset_id: '={{$parameter["dataset_id"]}}',
+							format: '={{$parameter["format"]}}',
+							include_errors: '={{$parameter["include_errors"]}}',
 						},
+						body: '={{JSON.parse($parameter["urls"])}}',  
 					},
 				},
 			},
@@ -86,7 +94,10 @@ export const webScrapperOperations: INodeProperties[] = [
 						url: '/datasets/v3/trigger',
 						qs: {
 							dataset_id: '={{$parameter["dataset_id"]}}',
+							endpoint: '={{$parameter["endpoint"]}}',
+							notify: '={{$parameter["notify"]}}',
 						},
+						body: '={{JSON.parse($parameter["urls"])}}',
 					},
 				},
 			},
@@ -221,6 +232,13 @@ const webScrapperParameters: INodeProperties[] = [
 			},
 		},
 		description: 'The number of records to download in each batch',
+		routing: {
+			request: {
+				qs: {
+					batch_size: '={{$value}}',
+				},
+			},
+		},
 	},
 
 	{
@@ -235,6 +253,13 @@ const webScrapperParameters: INodeProperties[] = [
 			},
 		},
 		description: 'The part number of the snapshot to download',
+		routing: {
+			request: {
+				qs: {
+					part: '={{$value}}',
+				},
+			},
+		},
 	},
 
 	{
@@ -247,13 +272,6 @@ const webScrapperParameters: INodeProperties[] = [
 			show: {
 				resource: ['webScrapper'],
 				operation: ['getSnapshots'],
-			},
-		},
-		routing: {
-			request: {
-				qs: {
-					skip: '={{$value}}',
-				},
 			},
 		},
 	},
@@ -272,13 +290,6 @@ const webScrapperParameters: INodeProperties[] = [
 				operation: ['getSnapshots'],
 			},
 		},
-		routing: {
-			request: {
-				qs: {
-					limit: '={{$value}}',
-				},
-			},
-		},
 	},
 	{
 		displayName: 'From Date',
@@ -290,13 +301,6 @@ const webScrapperParameters: INodeProperties[] = [
 			show: {
 				resource: ['webScrapper'],
 				operation: ['getSnapshots'],
-			},
-		},
-		routing: {
-			request: {
-				qs: {
-					from_date: '={{$value}}',
-				},
 			},
 		},
 		required: true,
@@ -311,13 +315,6 @@ const webScrapperParameters: INodeProperties[] = [
 			show: {
 				resource: ['webScrapper'],
 				operation: ['getSnapshots'],
-			},
-		},
-		routing: {
-			request: {
-				qs: {
-					to_date: '={{$value}}',
-				},
 			},
 		},
 		required: true,
@@ -357,11 +354,6 @@ const webScrapperParameters: INodeProperties[] = [
 				operation: ['triggerCollectionByUrl', 'scrapeByUrl'],
 			},
 		},
-		routing: {
-			send: {
-				type: 'body',
-			},
-		},
 	},
 
 	{
@@ -396,6 +388,7 @@ const webScrapperParameters: INodeProperties[] = [
 			},
 		],
 		default: 'json',
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['webScrapper'],
@@ -406,6 +399,13 @@ const webScrapperParameters: INodeProperties[] = [
 			},
 		},
 		description: 'The format of the data to be returned',
+		routing: {
+			request: {
+				qs: {
+					format: '={{$value}}',
+				},
+			},
+		},
 	},
 
 	{
@@ -420,12 +420,6 @@ const webScrapperParameters: INodeProperties[] = [
 				operation: ['triggerCollectionByUrl'],
 			},
 		},
-		routing: {
-			send: {
-				type: 'query',
-				property: 'endpoint',
-			},
-		},
 	},
 
 	{
@@ -438,12 +432,6 @@ const webScrapperParameters: INodeProperties[] = [
 			show: {
 				resource: ['webScrapper'],
 				operation: ['triggerCollectionByUrl'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'query',
-				property: 'notify',
 			},
 		},
 	},
@@ -847,7 +835,7 @@ const webScrapperParameters: INodeProperties[] = [
 	},
 	{
 		displayName: 'Access Key',
-		name: 'aws-access-key',
+		name: 'access-key',
 		type: 'string',
 		default: '',
 		displayOptions: {
@@ -1484,8 +1472,8 @@ const webScrapperParameters: INodeProperties[] = [
 		},
 		routing: {
 			request: {
-				body: {
-					compress: '={{$parameter["compress"]}}',
+				qs: {
+					compress: '={{$value}}',
 				},
 			},
 		},
