@@ -36,7 +36,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 						body: {
 							records_limit: '={{$parameter["records_limit"]}}',
 							filter: '={{$parameter["filter"]}}',
-							dataset_id: '={{$parameter["dataset_id"]}}',
+							dataset_id: '=={{$parameter["dataset_id"]}}',
 						},
 					},
 				},
@@ -386,14 +386,6 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 				name: 'Single Filter',
 				value: 'filter_single',
 			},
-			// {
-			// 	name: 'CSV Filter',
-			// 	value: 'csv_filter',
-			// },
-			// {
-			// 	name: 'JSON Filter',
-			// 	value: 'json_filter',
-			// },
 		],
 		default: 'filter_single',
 		displayOptions: {
@@ -420,15 +412,6 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 			},
 		},
 		description: 'Field name to filter on',
-		routing: {
-			request: {
-				body: {
-					filter: {
-						name: '={{$parameter["field_name"]}}',
-					},
-				},
-			},
-		},
 	},
 
 	{
@@ -495,15 +478,6 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 			},
 		},
 		description: 'Operator to use for the filter',
-		routing: {
-			request: {
-				body: {
-					filter: {
-						operator: '={{$parameter["field_operator"]}}',
-					},
-				},
-			},
-		},
 	},
 
 	{
@@ -519,15 +493,6 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 			},
 		},
 		description: 'Value to filter on',
-		routing: {
-			request: {
-				body: {
-					filter: {
-						value: '={{$parameter["field_value"]}}',
-					},
-				},
-			},
-		},
 	},
 
 	{
@@ -549,13 +514,6 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 		},
 		description:
 			'JSON filter. Supports a simple filter or a composite filter (using "and" with filters array).',
-		routing: {
-			request: {
-				body: {
-					filter_type: '={{$value}}',
-				},
-			},
-		},
 	},
 
 	{
@@ -984,7 +942,7 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 	},
 	{
 		displayName: 'Access Key',
-		name: 'aws-access-key',
+		name: 'access-key',
 		type: 'string',
 		default: '',
 		displayOptions: {

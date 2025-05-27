@@ -1,6 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
 
-import { sendErrorPostReceive } from './GenericFunctions';
 
 export const webUnlockerOperations: INodeProperties[] = [
 	{
@@ -22,8 +21,14 @@ export const webUnlockerOperations: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/request',
+						body: {
+							zone: '={{$parameter["zone"]}}',
+							country: '={{$parameter["country"]}}',
+							method: '={{$parameter["method"]}}',
+							url: '={{$parameter["url"]}}',
+							format: '={{$parameter["format"]}}',
+						},
 					},
-					output: { postReceive: [sendErrorPostReceive] },
 				},
 			},
 		],
@@ -51,12 +56,6 @@ const webUnlockerParameters: INodeProperties[] = [
 				},
 			},
 		],
-		routing: {
-			send: {
-				type: 'body',
-				property: 'zone',
-			},
-		},
 		required: true,
 		description: 'Select the zone',
 		displayOptions: {
@@ -85,12 +84,6 @@ const webUnlockerParameters: INodeProperties[] = [
 				},
 			},
 		],
-		routing: {
-			send: {
-				type: 'body',
-				property: 'country',
-			},
-		},
 		required: true,
 		description: 'Select the country',
 		displayOptions: {
@@ -130,12 +123,6 @@ const webUnlockerParameters: INodeProperties[] = [
 				value: 'PUT',
 			},
 		],
-		routing: {
-			send: {
-				type: 'body',
-				property: 'method',
-			},
-		},
 		default: 'GET',
 		required: true,
 		description: 'The HTTP method to use',
@@ -151,12 +138,6 @@ const webUnlockerParameters: INodeProperties[] = [
 		name: 'url',
 		type: 'string',
 		default: '',
-		routing: {
-			send: {
-				type: 'body',
-				property: 'url',
-			},
-		},
 		required: true,
 		description: 'The URL to send the request to',
 		displayOptions: {
@@ -181,12 +162,6 @@ const webUnlockerParameters: INodeProperties[] = [
 				value: 'json',
 			},
 		],
-		routing: {
-			send: {
-				type: 'body',
-				property: 'format',
-			},
-		},
 		default: 'raw',
 		required: true,
 		description: 'The format of the response',

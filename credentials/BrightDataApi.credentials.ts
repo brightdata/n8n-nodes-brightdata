@@ -1,4 +1,4 @@
-import { IAuthenticateGeneric, ICredentialType, INodeProperties } from 'n8n-workflow';
+import { IAuthenticateGeneric, ICredentialType, INodeProperties, ICredentialTestRequest  } from 'n8n-workflow';
 
 export class BrightDataApi implements ICredentialType {
 	name = 'brightdataApi';
@@ -26,6 +26,13 @@ export class BrightDataApi implements ICredentialType {
 			headers: {
 				Authorization: '={{"Bearer " + $credentials.token}}',
 			},
+		},
+	};
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: 'https://api.brightdata.com',
+			url: '/zone/get_active_zones',
+			method: 'GET',
 		},
 	};
 }
