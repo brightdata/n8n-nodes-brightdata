@@ -16,7 +16,7 @@ export const webUnlockerOperations: INodeProperties[] = [
 			{
 				name: 'Send a Request',
 				value: 'request',
-				action: 'Perform a request',
+				action: 'Access and extract data from a specific URL',
 				routing: {
 					request: {
 						method: 'POST',

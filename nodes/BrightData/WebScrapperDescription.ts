@@ -16,7 +16,7 @@ export const webScrapperOperations: INodeProperties[] = [
 			{
 				name: "Deliver Snapshot",
 				value: 'deliverSnapshot',
-				action: 'Deliver the snapshot content to the specified storage',
+				action: 'Deliver a snapshot to specified storage',
 				routing: {
 					request: {
 						method: 'POST',
@@ -31,7 +31,7 @@ export const webScrapperOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/v3/snapshot/{{$parameter["snapshot_id"]}}',
+						url: '=/datasets/v3/snapshot/{{$parameter["snapshot_id"]}}',
 					},
 				},
 			},
@@ -58,11 +58,11 @@ export const webScrapperOperations: INodeProperties[] = [
 			{
 				name: 'Monitor Progress Snapshot',
 				value: 'monitorProgressSnapshot',
-				action: 'Monitor the progress of a snapshot',
+				action: 'Check the status of a batch extraction',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/v3/progress/{{$parameter["snapshot_id"]}}',
+						url: '=/datasets/v3/progress/{{$parameter["snapshot_id"]}}',
 					},
 				},
 			},
@@ -70,7 +70,7 @@ export const webScrapperOperations: INodeProperties[] = [
 			{
 				name: 'Scrape By URL',
 				value: 'scrapeByUrl',
-				action: 'Scrape data synchronously by URL',
+				action: 'Extract structured data from a single URL',
 				routing: {
 					request: {
 						method: 'POST',
@@ -87,7 +87,7 @@ export const webScrapperOperations: INodeProperties[] = [
 			{
 				name: 'Trigger Collection By URL',
 				value: 'triggerCollectionByUrl',
-				action: 'Trigger a collection and generate a snapshot by URL',
+				action: 'Initiate batch extraction from URL',
 				routing: {
 					request: {
 						method: 'POST',

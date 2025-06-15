@@ -16,7 +16,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: "Deliver Snapshot",
 				value: 'deliverSnapshot',
-				action: 'Deliver the dataset snapshot',
+				action: 'Deliver a snapshot to specified storage',
 				routing: {
 					request: {
 						method: 'POST',
@@ -28,23 +28,33 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'Filter Dataset',
 				value: 'filterDataset',
-				action: 'Create a dataset snapshot based on a provided filter',
+				action: 'Filter a dataset to create a snapshot',
 				routing: {
 					request: {
 						method: 'POST',
 						url: '/datasets/filter',
-						body: {
-							records_limit: '={{$parameter["records_limit"]}}',
-							filter: '={{$parameter["filter"]}}',
-							dataset_id: '=={{$parameter["dataset_id"]}}',
-						},
+						body: `={{
+							{
+								"dataset_id": $parameter["dataset_id"].value || $parameter["dataset_id"],
+								"records_limit": $parameter["records_limit"],
+								"filter": $parameter["filter_type"] === "filter_single" 
+									? {
+										"name": $parameter["field_name"],
+										"operator": $parameter["field_operator"], 
+										"value": $parameter["field_value"]
+									}
+									: $parameter["filter_type"] === "filters_group"
+									? JSON.parse($parameter["filters_group"])
+									: {}
+							}
+						}}`,
 					},
 				},
 			},
 			{
 				name: 'Get Dataset Metadata',
 				value: 'getDatasetMetadata',
-				action: 'Retrieve detailed metadata for a specific dataset',
+				action: 'Retrieve metadata for a specific dataset (by dataset ID)',
 				routing: {
 					request: {
 						method: 'GET',
@@ -55,11 +65,11 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'Get Snapshot Content',
 				value: 'getSnapshotContent',
-				action: 'Get dataset snapshot content',
+				action: 'Retrieve data (by snapshot ID)',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/snapshots/{{$parameter["snapshot_id"]}}/content',
+						url: '=/datasets/snapshots/{{$parameter["snapshot_id"]}}/download',
 						qs: {
 							format: '={{$parameter["format"]}}',
 							compress: '={{$parameter["compress"] || false}}',
@@ -72,22 +82,22 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'Get Snapshot Metadata',
 				value: 'getSnapshotMetadata',
-				action: 'Get dataset snapshot metadata',
+				action: 'Get metadata for a selected snapshot (by snapshot ID)',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/snapshots/{{$parameter["snapshot_id"]}}/metadata',
+						url: '=/datasets/snapshots/{{$parameter["snapshot_id"]}}',
 					},
 				},
 			},
 			{
 				name: 'Get Snapshot Parts',
 				value: 'getSnapshotParts',
-				action: 'Get dataset snapshot delivery parts',
+				action: 'Split snapshot data to parts (by snapshot ID)',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/snapshots/{{$parameter["snapshot_id"]}}/parts',
+						url: '=/datasets/snapshots/{{$parameter["snapshot_id"]}}/parts',
 					},
 				},
 			},
@@ -95,7 +105,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'List Datasets',
 				value: 'listDatasets',
-				action: 'Retrieve a list of available datasets',
+				action: 'List available datasets',
 				routing: {
 					request: {
 						method: 'GET',
@@ -107,7 +117,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'List Snapshots',
 				value: 'listSnapshots',
-				action: 'Get dataset snapshots',
+				action: 'List all your snapshot IDs',
 				routing: {
 					request: {
 						method: 'GET',
