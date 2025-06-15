@@ -31,7 +31,7 @@ export const webScrapperOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/v3/snapshot/{{$parameter["snapshot_id"]}}',
+						url: '=/datasets/v3/snapshot/{{$parameter["snapshot_id"]}}',
 					},
 				},
 			},
@@ -62,7 +62,7 @@ export const webScrapperOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/v3/progress/{{$parameter["snapshot_id"]}}',
+						url: '=/datasets/v3/progress/{{$parameter["snapshot_id"]}}',
 					},
 				},
 			},

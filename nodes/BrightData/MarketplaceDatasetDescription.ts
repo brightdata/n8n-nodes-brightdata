@@ -33,11 +33,21 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/datasets/filter',
-						body: {
-							records_limit: '={{$parameter["records_limit"]}}',
-							filter: '={{$parameter["filter"]}}',
-							dataset_id: '=={{$parameter["dataset_id"]}}',
-						},
+						body: `={{
+							{
+								"dataset_id": $parameter["dataset_id"].value || $parameter["dataset_id"],
+								"records_limit": $parameter["records_limit"],
+								"filter": $parameter["filter_type"] === "filter_single" 
+									? {
+										"name": $parameter["field_name"],
+										"operator": $parameter["field_operator"], 
+										"value": $parameter["field_value"]
+									}
+									: $parameter["filter_type"] === "filters_group"
+									? JSON.parse($parameter["filters_group"])
+									: {}
+							}
+						}}`,
 					},
 				},
 			},
@@ -59,7 +69,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/snapshots/{{$parameter["snapshot_id"]}}/content',
+						url: '=/datasets/snapshots/{{$parameter["snapshot_id"]}}/download',
 						qs: {
 							format: '={{$parameter["format"]}}',
 							compress: '={{$parameter["compress"] || false}}',
@@ -76,7 +86,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/snapshots/{{$parameter["snapshot_id"]}}/metadata',
+						url: '=/datasets/snapshots/{{$parameter["snapshot_id"]}}',
 					},
 				},
 			},
@@ -87,7 +97,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/datasets/snapshots/{{$parameter["snapshot_id"]}}/parts',
+						url: '=/datasets/snapshots/{{$parameter["snapshot_id"]}}/parts',
 					},
 				},
 			},
