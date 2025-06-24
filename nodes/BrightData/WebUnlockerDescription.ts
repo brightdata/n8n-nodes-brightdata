@@ -43,7 +43,7 @@ const webUnlockerParameters: INodeProperties[] = [
 		type: 'resourceLocator',
 		default: {
 			mode: 'list',
-			value: 'web_unlocker1',
+			value: 'n8n_unlocker',
 		},
 		modes: [
 			{
