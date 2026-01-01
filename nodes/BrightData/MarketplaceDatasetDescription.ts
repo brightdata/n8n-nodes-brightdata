@@ -117,7 +117,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'List Snapshots',
 				value: 'listSnapshots',
-				action: 'List all your snapshot i ds',
+				action: 'List all your snapshot IDs',
 				routing: {
 					request: {
 						method: 'GET',
