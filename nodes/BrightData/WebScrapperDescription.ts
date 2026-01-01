@@ -221,6 +221,20 @@ const webScrapperParameters: INodeProperties[] = [
 	},
 
 	{
+		displayName: 'Split Into Parts',
+		name: 'split_into_parts',
+		type: 'boolean',
+		default: false,
+		displayOptions: {
+			show: {
+				resource: ['webScrapper'],
+				operation: ['downloadSnapshot'],
+			},
+		},
+		description: 'Whether to split the snapshot into parts. Enable this for large snapshots to download in batches.',
+	},
+
+	{
 		displayName: 'Batch Size',
 		name: 'batch_size',
 		type: 'number',
@@ -229,6 +243,7 @@ const webScrapperParameters: INodeProperties[] = [
 			show: {
 				resource: ['webScrapper'],
 				operation: ['downloadSnapshot'],
+				split_into_parts: [true],
 			},
 		},
 		description: 'The number of records to download in each batch',
@@ -250,6 +265,7 @@ const webScrapperParameters: INodeProperties[] = [
 			show: {
 				resource: ['webScrapper'],
 				operation: ['downloadSnapshot'],
+				split_into_parts: [true],
 			},
 		},
 		description: 'The part number of the snapshot to download',
