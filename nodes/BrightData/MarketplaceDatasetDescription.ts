@@ -54,7 +54,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'Get Dataset Metadata',
 				value: 'getDatasetMetadata',
-				action: 'Retrieve metadata for a specific dataset (by dataset ID)',
+				action: 'Retrieve metadata for a specific dataset by dataset id',
 				routing: {
 					request: {
 						method: 'GET',
@@ -65,7 +65,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'Get Snapshot Content',
 				value: 'getSnapshotContent',
-				action: 'Retrieve data (by snapshot ID)',
+				action: 'Retrieve data by snapshot id',
 				routing: {
 					request: {
 						method: 'GET',
@@ -82,7 +82,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'Get Snapshot Metadata',
 				value: 'getSnapshotMetadata',
-				action: 'Get metadata for a selected snapshot (by snapshot ID)',
+				action: 'Get metadata for a selected snapshot by snapshot id',
 				routing: {
 					request: {
 						method: 'GET',
@@ -93,7 +93,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'Get Snapshot Parts',
 				value: 'getSnapshotParts',
-				action: 'Split snapshot data to parts (by snapshot ID)',
+				action: 'Split snapshot data to parts by snapshot id',
 				routing: {
 					request: {
 						method: 'GET',
@@ -117,7 +117,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'List Snapshots',
 				value: 'listSnapshots',
-				action: 'List all your snapshot IDs',
+				action: 'List all your snapshot i ds',
 				routing: {
 					request: {
 						method: 'GET',
