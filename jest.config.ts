@@ -5,10 +5,11 @@ const config: JestConfigWithTsJest = {
   testEnvironment: 'node',
   moduleFileExtensions: ['ts', 'js'],
   testMatch: ['**/__tests__/**/*.test.ts'],
-  globals: {
-    'ts-jest': {
-      isolatedModules: true,
-    },
+  moduleNameMapper: {
+    '^n8n-workflow$': '<rootDir>/__mocks__/n8n-workflow.ts',
+  },
+  transform: {
+    '^.+\\.ts$': ['ts-jest', { isolatedModules: true }],
   },
 };
 

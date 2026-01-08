@@ -1,6 +1,6 @@
 {
   "name": "@brightdata/n8n-nodes-brightdata",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Bright Data service for scraping purposes in n8n",
   "keywords": [
     "n8n",
@@ -46,8 +46,8 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
-    "@typescript-eslint/parser": "^7.15.0",
-    "eslint": "^9.20.1",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.3",
     "globals": "^15.15.0",
     "gulp": "^4.0.2",

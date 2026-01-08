@@ -14,7 +14,7 @@ export const webScrapperOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: "Deliver Snapshot",
+				name: 'Deliver Snapshot',
 				value: 'deliverSnapshot',
 				action: 'Deliver a snapshot to specified storage',
 				routing: {
@@ -25,7 +25,7 @@ export const webScrapperOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: "Download Snapshot",
+				name: 'Download Snapshot',
 				value: 'downloadSnapshot',
 				action: 'Download the snapshot content',
 				routing: {
@@ -75,12 +75,12 @@ export const webScrapperOperations: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/datasets/v3/scrape',
-						qs: {  
+						qs: {
 							dataset_id: '={{$parameter["dataset_id"]}}',
 							format: '={{$parameter["format"]}}',
 							include_errors: '={{$parameter["include_errors"]}}',
 						},
-						body: '={{JSON.parse($parameter["urls"])}}',  
+						body: '={{JSON.parse($parameter["urls"])}}',
 					},
 				},
 			},
@@ -109,7 +109,6 @@ export const webScrapperOperations: INodeProperties[] = [
 // Here we define what to show when the `get` operation is selected.
 // We do that by adding `operation: ["get"]` to `displayOptions.show`
 const webScrapperParameters: INodeProperties[] = [
-
 	{
 		displayName: 'Dataset',
 		name: 'dataset_id',
@@ -134,15 +133,10 @@ const webScrapperParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webScrapper'],
-				operation: [
-					'getSnapshots',
-					'scrapeByUrl',
-					'triggerCollectionByUrl',
-				],
+				operation: ['getSnapshots', 'scrapeByUrl', 'triggerCollectionByUrl'],
 			},
 		},
 	},
-
 
 	{
 		displayName: 'Status',
@@ -328,18 +322,12 @@ const webScrapperParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webScrapper'],
-				operation: [
-					'monitorProgressSnapshot',
-					'deliverSnapshot',
-					'downloadSnapshot',
-				],
+				operation: ['monitorProgressSnapshot', 'deliverSnapshot', 'downloadSnapshot'],
 			},
 		},
 		required: true,
 		description: 'The ID of the snapshot to operate on',
 	},
-
-
 
 	{
 		displayName: 'URLs',
@@ -364,9 +352,7 @@ const webScrapperParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webScrapper'],
-				operation: [
-					'scrapeByUrl',
-				],
+				operation: ['scrapeByUrl'],
 			},
 		},
 		required: true,
@@ -392,10 +378,7 @@ const webScrapperParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webScrapper'],
-				operation: [
-					'scrapeByUrl',
-					'downloadSnapshot',
-				],
+				operation: ['scrapeByUrl', 'downloadSnapshot'],
 			},
 		},
 		description: 'The format of the data to be returned',
@@ -1478,7 +1461,6 @@ const webScrapperParameters: INodeProperties[] = [
 			},
 		},
 	},
-
 ];
 
 export const webScrapperFields: INodeProperties[] = [...webScrapperParameters];

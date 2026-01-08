@@ -1,4 +1,9 @@
-import { IAuthenticateGeneric, ICredentialType, INodeProperties, ICredentialTestRequest  } from 'n8n-workflow';
+import {
+	IAuthenticateGeneric,
+	ICredentialType,
+	INodeProperties,
+	ICredentialTestRequest,
+} from 'n8n-workflow';
 
 export class BrightDataApi implements ICredentialType {
 	name = 'brightdataApi';
