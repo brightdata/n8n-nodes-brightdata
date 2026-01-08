@@ -1,6 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
 
-
 export const webUnlockerOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -43,7 +42,9 @@ export const webUnlockerOperations: INodeProperties[] = [
 							country: '={{$parameter["country"]}}',
 							method: '={{$parameter["method"]}}',
 							url: '={{$parameter["url"]}}',
-							format: '={{$parameter["format"]}}',
+							format:
+								'={{$parameter["data_format"] === "markdown" ? "raw" : $parameter["format"]}}',
+							data_format: '={{$parameter["data_format"] || undefined}}',
 						},
 					},
 				},
@@ -79,7 +80,7 @@ const webUnlockerParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webUnlocker'],
-				operation: ['request', 'googleSearch'],
+				operation: ['request', 'WebSearch'],
 			},
 		},
 	},
@@ -108,7 +109,7 @@ const webUnlockerParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webUnlocker'],
-				operation: ['request', 'googleSearch'],
+				operation: ['request', 'WebSearch'],
 			},
 		},
 	},
@@ -123,7 +124,7 @@ const webUnlockerParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webUnlocker'],
-				operation: ['googleSearch'],
+				operation: ['WebSearch'],
 			},
 		},
 	},
@@ -136,7 +137,7 @@ const webUnlockerParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webUnlocker'],
-				operation: ['googleSearch'],
+				operation: ['WebSearch'],
 			},
 		},
 	},
@@ -196,6 +197,30 @@ const webUnlockerParameters: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'Data Format',
+		name: 'data_format',
+		type: 'options',
+		options: [
+			{
+				name: 'None',
+				value: '',
+			},
+			{
+				name: 'Markdown',
+				value: 'markdown',
+			},
+		],
+		default: '',
+		description:
+			'When set to Markdown, the response will be returned as markdown (format is forced to Raw)',
+		displayOptions: {
+			show: {
+				resource: ['webUnlocker'],
+				operation: ['request'],
+			},
+		},
+	},
+	{
 		displayName: 'Format',
 		name: 'format',
 		type: 'options',
@@ -216,6 +241,7 @@ const webUnlockerParameters: INodeProperties[] = [
 			show: {
 				resource: ['webUnlocker'],
 				operation: ['request'],
+				data_format: [''],
 			},
 		},
 	},
