@@ -1,6 +1,5 @@
 import { INodeProperties } from 'n8n-workflow';
 
-
 export const webUnlockerOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -14,6 +13,23 @@ export const webUnlockerOperations: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Web Search',
+				value: 'WebSearch',
+				action: 'Search the web and get serp results',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/request',
+						body: {
+							zone: '={{$parameter["zone"]}}',
+							country: '={{$parameter["country"]}}',
+							url: '={{`https://www.google.com/search?q=${encodeURIComponent($parameter["query"])}&start=${(($parameter["page"] || 1) - 1) * 10}&brd_json=1`}}',
+							format: 'raw',
+						},
+					},
+				},
+			},
+			{
 				name: 'Send a Request',
 				value: 'request',
 				action: 'Access and extract data from a specific URL',
@@ -26,7 +42,9 @@ export const webUnlockerOperations: INodeProperties[] = [
 							country: '={{$parameter["country"]}}',
 							method: '={{$parameter["method"]}}',
 							url: '={{$parameter["url"]}}',
-							format: '={{$parameter["format"]}}',
+							format:
+								'={{$parameter["data_format"] === "markdown" ? "raw" : $parameter["format"]}}',
+							data_format: '={{$parameter["data_format"] || undefined}}',
 						},
 					},
 				},
@@ -37,13 +55,14 @@ export const webUnlockerOperations: INodeProperties[] = [
 ];
 
 const webUnlockerParameters: INodeProperties[] = [
+	// Zone - shared by both operations
 	{
 		displayName: 'Zone',
 		name: 'zone',
 		type: 'resourceLocator',
 		default: {
 			mode: 'list',
-			value: 'web_unlocker1',
+			value: 'n8n_unlocker',
 		},
 		modes: [
 			{
@@ -61,10 +80,11 @@ const webUnlockerParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webUnlocker'],
-				operation: ['request'],
+				operation: ['request', 'WebSearch'],
 			},
 		},
 	},
+	// Country - shared by both operations
 	{
 		displayName: 'Country',
 		name: 'country',
@@ -89,10 +109,39 @@ const webUnlockerParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['webUnlocker'],
-				operation: ['request'],
+				operation: ['request', 'WebSearch'],
 			},
 		},
 	},
+
+	{
+		displayName: 'Search Query',
+		name: 'query',
+		type: 'string',
+		default: '',
+		required: true,
+		description: 'The search query to send to Google',
+		displayOptions: {
+			show: {
+				resource: ['webUnlocker'],
+				operation: ['WebSearch'],
+			},
+		},
+	},
+	{
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
+		default: 1,
+		description: 'The page number of search results (1 = first page, 2 = second page, etc.)',
+		displayOptions: {
+			show: {
+				resource: ['webUnlocker'],
+				operation: ['WebSearch'],
+			},
+		},
+	},
+
 	{
 		displayName: 'Method',
 		name: 'method',
@@ -147,7 +196,30 @@ const webUnlockerParameters: INodeProperties[] = [
 			},
 		},
 	},
-
+	{
+		displayName: 'Data Format',
+		name: 'data_format',
+		type: 'options',
+		options: [
+			{
+				name: 'None',
+				value: '',
+			},
+			{
+				name: 'Markdown',
+				value: 'markdown',
+			},
+		],
+		default: '',
+		description:
+			'When set to Markdown, the response will be returned as markdown (format is forced to Raw)',
+		displayOptions: {
+			show: {
+				resource: ['webUnlocker'],
+				operation: ['request'],
+			},
+		},
+	},
 	{
 		displayName: 'Format',
 		name: 'format',
@@ -169,6 +241,7 @@ const webUnlockerParameters: INodeProperties[] = [
 			show: {
 				resource: ['webUnlocker'],
 				operation: ['request'],
+				data_format: [''],
 			},
 		},
 	},
