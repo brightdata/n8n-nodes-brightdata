@@ -19,6 +19,8 @@ type DataSetItem = {
 type DataSetResponse = DataSetItem[];
 
 export async function getActiveZones(this: ILoadOptionsFunctions): Promise<INodeListSearchResult> {
+	await ensureZoneExists.call(this, 'n8n_unlocker');
+	await ensureZoneExists.call(this, 'n8n_serp', 'serp');
 	const responseData: ZoneSearchResponse = await this.helpers.requestWithAuthentication.call(
 		this,
 		'brightdataApi',
@@ -106,4 +108,38 @@ export async function getDataSets(this: ILoadOptionsFunctions): Promise<INodeLis
 	results.sort((a, b) => a.name.localeCompare(b.name));
 
 	return { results };
+}
+
+export async function ensureZoneExists(
+	this: ILoadOptionsFunctions,
+	zoneName: string = 'n8n_unlocker',
+	zoneType: string = 'unblocker',
+): Promise<void> {
+	try {
+		const zones: ZoneSearchResponse = await this.helpers.requestWithAuthentication.call(
+			this,
+			'brightdataApi',
+			{
+				method: 'GET',
+				url: 'https://api.brightdata.com/zone/get_active_zones',
+				json: true,
+			},
+		);
+
+		const hasZone = zones.some((zone: ZoneSearchItem) => zone.name === zoneName);
+
+		if (!hasZone) {
+			await this.helpers.requestWithAuthentication.call(this, 'brightdataApi', {
+				method: 'POST',
+				url: 'https://api.brightdata.com/zone',
+				json: true,
+				body: {
+					zone: { name: zoneName, type: zoneType },
+					plan: zoneType === 'serp' ? { type: 'unblocker', serp: true } : { type: zoneType },
+				},
+			});
+		}
+	} catch (error) {
+		console.warn('Failed to ensure zone exists:', error);
+	}
 }

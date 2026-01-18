@@ -225,7 +225,8 @@ const webScrapperParameters: INodeProperties[] = [
 				operation: ['downloadSnapshot'],
 			},
 		},
-		description: 'Whether to split the snapshot into parts. Enable this for large snapshots to download in batches.',
+		description:
+			'Whether to split the snapshot into parts. Enable this for large snapshots to download in batches.',
 	},
 
 	{
