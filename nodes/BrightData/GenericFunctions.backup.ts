@@ -43,8 +43,12 @@ export async function brightdataApiRequest(
 	options.url += endpoint;
 	try {
 		console.log('Request to BrightData API:', JSON.stringify(options, null, 2));
-		const response = await this.helpers.requestWithAuthentication.call(this, 'brightdataApi', options);
-		if (endpoint.indexOf("filter") !== -1) {
+		const response = await this.helpers.requestWithAuthentication.call(
+			this,
+			'brightdataApi',
+			options,
+		);
+		if (endpoint.indexOf('filter') !== -1) {
 			console.log('Response from BrightData API:', response);
 		}
 
@@ -54,7 +58,7 @@ export async function brightdataApiRequest(
 		return new NodeApiError(this.getNode(), {
 			statusCode: error.httpCode,
 			description: error.description,
-			} as unknown as JsonObject);
+		} as unknown as JsonObject);
 	}
 }
 

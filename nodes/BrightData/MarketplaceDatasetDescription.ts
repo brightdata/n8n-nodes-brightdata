@@ -14,7 +14,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: "Deliver Snapshot",
+				name: 'Deliver Snapshot',
 				value: 'deliverSnapshot',
 				action: 'Deliver a snapshot to specified storage',
 				routing: {
@@ -117,7 +117,7 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 			{
 				name: 'List Snapshots',
 				value: 'listSnapshots',
-				action: 'List all your snapshot IDs',
+				action: 'List all your snapshot ids',
 				routing: {
 					request: {
 						method: 'GET',
@@ -125,8 +125,6 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 					},
 				},
 			},
-
-
 		],
 		default: 'listDatasets',
 	},
@@ -135,7 +133,6 @@ export const marketplaceDatasetOperations: INodeProperties[] = [
 // Here we define what to show when the `get` operation is selected.
 // We do that by adding `operation: ["get"]` to `displayOptions.show`
 const marketplaceDatasetParameters: INodeProperties[] = [
-
 	{
 		displayName: 'Dataset',
 		name: 'dataset_id',
@@ -160,11 +157,7 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['marketplaceDataset'],
-				operation: [
-					'getDatasetMetadata',
-					'filterDataset',
-					'listSnapshots'
-				],
+				operation: ['getDatasetMetadata', 'filterDataset', 'listSnapshots'],
 			},
 		},
 	},
@@ -258,7 +251,6 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 		],
 		description: 'The status of the snapshot to filter the snapshots',
 	},
-
 
 	{
 		displayName: 'Snapshot ID',
@@ -1595,7 +1587,6 @@ const marketplaceDatasetParameters: INodeProperties[] = [
 			},
 		},
 	},
-
 ];
 
 export const marketplaceDatasetFields: INodeProperties[] = [...marketplaceDatasetParameters];
